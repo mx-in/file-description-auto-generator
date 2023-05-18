@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import {wait} from './wait'
+import {expect, test} from 'jest/globals'
 
 async function run(): Promise<void> {
   try {
