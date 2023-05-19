@@ -2,23 +2,19 @@ import * as core from '@actions/core'
 
 export async function run(): Promise<void> {
   try {
-    core.debug('start to run : )')
+    core.info('Hello world!')
     const api_key = core.getInput('openai-api-key')
-    core.debug(`api_key: ${api_key}`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
     const prompt = core.getInput('openai-prompt')
-    core.debug(`prompt: ${prompt}`)
-
     const model = core.getInput('model')
-    core.debug(`model: ${model}`)
-
-    const source_dist_map = core.getInput('source-dist-map')
-    core.debug(`source_dist_map: ${source_dist_map}`)
-
-    core.setOutput('time', new Date().toTimeString())
+    const input = core.getInput('input-files')
+    const output = core.getInput('output-dest')
+    core.info(`api_key: ${api_key}`)
+    core.info(`prompt: ${prompt}`)
+    core.info(`model: ${model}`)
+    core.info(`input: ${input}`)
+    core.info(`output: ${output}`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
-
 run()
