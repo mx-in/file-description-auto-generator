@@ -1,0 +1,17 @@
+name: OpenAI Action test
+on:
+  push:
+    branches:
+      - main
+jobs:
+  summarize:
+    name: OpenAI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mx-in/file-description-auto-generator@v0.1-alpha.1
+        with:
+          openai-api-key: this is a test key
+          openai-prompt: |
+            Write a description for this git commit: 
+            ${{ github.event.head_commit.message }}
+          source-dist-map: '{"file1":"ob1","file2": "obj2"}'
