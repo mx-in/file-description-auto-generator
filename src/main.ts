@@ -1,16 +1,5 @@
 import * as core from '@actions/core'
 
-// openai-api-key:
-//   description: 'Your openai api key'
-//   required: true
-// openai-prompt:
-//   description: 'The OpenAI prompt'
-//   require: true
-// model:
-//   description: 'The model to use'
-//   required: false
-//   default: 'text-davinci-003'
-// source-dist-map:
 export async function run(): Promise<void> {
   try {
     core.debug('start to run : )')

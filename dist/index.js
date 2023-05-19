@@ -41,17 +41,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const core = __importStar(__nccwpck_require__(733));
-// openai-api-key:
-//   description: 'Your openai api key'
-//   required: true
-// openai-prompt:
-//   description: 'The OpenAI prompt'
-//   require: true
-// model:
-//   description: 'The model to use'
-//   required: false
-//   default: 'text-davinci-003'
-// source-dist-map:
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
