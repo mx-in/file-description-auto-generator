@@ -22,7 +22,7 @@ jobs:
       - uses: ./
         with:
           openai-api-key: this is a test key
-          mode: gpt4.0
+          model: gpt4.0
           openai-prompt: |
             Write a description for this git commit: 
             ${{ github.event.head_commit.message }}
