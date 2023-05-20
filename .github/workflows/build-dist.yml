@@ -29,7 +29,7 @@ jobs:
           if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build.  See status below:"
             git diff
-            echo "::set-output name=need_commit::true"
+            echo "{need_commit}={true}" >> $GITHUB_OUTPUT
           fi
         id: diff
 
