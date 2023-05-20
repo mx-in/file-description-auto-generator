@@ -22,9 +22,10 @@ jobs:
       - uses: ./
         with:
           openai-api-key: this is a test key
-          model: gpt4.0
+          model: gpt-3.5
           openai-prompt: |
             Write a description for this git commit: 
             ${{ github.event.head_commit.message }}
           input-files: ./package.json
-          output-dest: ./desc.md
+          output-file-name: ./ai-gen-desc.md
+          rewrite: true

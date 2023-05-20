@@ -8,11 +8,14 @@ export async function run(): Promise<void> {
     const model = core.getInput('model')
     const input = core.getInput('input-files')
     const output = core.getInput('output-dest')
+    const rewrite = core.getInput('rewrite')
+
     core.info(`api_key: ${api_key}`)
     core.info(`prompt: ${prompt}`)
     core.info(`model: ${model}`)
     core.info(`input: ${input}`)
     core.info(`output: ${output}`)
+    core.info(`rewrite: ${rewrite}`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

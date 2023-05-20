@@ -15,9 +15,13 @@ inputs:
   input-files:
     description: 'The files which as AI inputs'
     require: true
-  output-dest:
-    description: 'Dist file for AI generate text'
+  output-file-name:
+    description: 'The out put file name for AI generate text'
     require: true
+  rewrite:
+    description: 'The tag that if the exist output should be rewriten'
+    require: false
+    default: false
 runs:
   using: 'node16'
   main: 'dist/index.js'
