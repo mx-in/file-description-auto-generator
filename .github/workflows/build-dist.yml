@@ -3,7 +3,7 @@ name: Build dist/
 on:
   push:
 jobs:
-  check-dist:
+  build-dist:
     runs-on: ubuntu-latest
 
     steps:
