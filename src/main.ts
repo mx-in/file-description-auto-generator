@@ -1,21 +1,27 @@
 import * as core from '@actions/core'
+import {FDModel} from './model'
 
 export async function run(): Promise<void> {
   try {
     core.info('Hello world!')
-    const api_key = core.getInput('openai-api-key')
+    const apiKey = core.getInput('openai-api-key')
     const prompt = core.getInput('openai-prompt')
     const model = core.getInput('model')
     const input = core.getInput('input-files')
     const output = core.getInput('output-dest')
     const rewrite = core.getInput('rewrite')
 
-    core.info(`api_key: ${api_key}`)
-    core.info(`prompt: ${prompt}`)
-    core.info(`model: ${model}`)
-    core.info(`input: ${input}`)
-    core.info(`output: ${output}`)
-    core.info(`rewrite: ${rewrite}`)
+    const inputModel: FDModel = {
+      apiKey,
+      prompt,
+      model,
+      input,
+      output,
+      rewrite: Boolean(rewrite)
+    }
+
+    //console all the key in inputModel
+    core.info(JSON.stringify(inputModel))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
