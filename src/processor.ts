@@ -35,6 +35,7 @@ abstract class Processor {
     const model = this.model
     return (
       !!model.apiKey ||
+      !!model.githubToken ||
       !!model.prompt ||
       !!model.model ||
       !!model.input ||

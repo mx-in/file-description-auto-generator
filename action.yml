@@ -5,6 +5,9 @@ inputs:
   openai-api-key:
     description: 'Your openai api key'
     required: true
+  github-token:
+    description: 'Your github token'
+    required: true
   openai-prompt:
     description: 'The OpenAI prompt'
     require: true
