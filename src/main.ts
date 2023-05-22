@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
-import {Octokit} from '@octokit/rest'
-import {FDModel} from './model'
-import {context} from '@actions/github'
-import {OpenAIProcessor} from './processor'
+import { Octokit } from '@octokit/rest'
+import { FDModel } from './model'
+import { context } from '@actions/github'
+import { OpenAIProcessor } from './processor'
 
 export async function run(): Promise<void> {
   try {

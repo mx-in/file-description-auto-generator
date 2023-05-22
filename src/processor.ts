@@ -44,3 +44,9 @@ abstract class Processor {
     )
   }
 }
+
+export class OpenAIProcessor extends Processor {
+  async generateOutput(input: string): Promise<string> {
+    return input
+  }
+}
