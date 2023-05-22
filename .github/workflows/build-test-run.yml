@@ -1,0 +1,72 @@
+name: Build Test and Run
+
+on:
+  push:
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16.x
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Build and run all(lint, package, test cases)
+        run: |
+          npm run all
+
+      - name: Compare the expected and actual dist/ directories
+        run: |
+          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build.  See status below:"
+            git diff
+            echo "{need_commit}={true}" >> $GITHUB_OUTPUT
+          fi
+        id: diff
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        if: ${{ steps.diff.outputs.need_commit == 'true' }}
+        with:
+          commit_message: build and update dist automatically
+          file_pattern: 'dist/*'
+
+      - name: Run Action
+        uses: ./
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          model: gpt-3.5
+          openai-prompt: |
+            Write a description for this git commit: 
+            ${{ github.event.head_commit.message }}
+          input-files: ./package.json
+          output-file-name: ./ai-gen-desc.md
+          rewrite: true
