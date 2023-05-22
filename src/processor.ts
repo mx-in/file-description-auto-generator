@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import {FDModel} from './model'
+import { FDModel } from './model'
 
 abstract class Processor {
   protected isOutputExist: boolean
@@ -43,8 +43,4 @@ abstract class Processor {
       model.rewrite === undefined
     )
   }
-}
-
-export class OpenAIProcessor extends Processor {
-  readinput(): string {}
 }
