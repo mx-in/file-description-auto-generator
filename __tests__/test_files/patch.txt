@@ -1,0 +1,17 @@
+@@ -41,7 +41,6 @@ brew install tldr
+ brew install btop
+ brew install thefuck
+ brew install tmux-mem-cpu-load
+-brew install bat
+
+ # Packer
+ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+@@ -86,6 +85,7 @@ brew install --cask android-studio
+ brew install --cask the-unarchiver
+ brew install --cask kindle
+ brew install --cask imazing
++brew install --cask notion
+
+ #Bin executable
+ chmod +x ~/.config/bin/*
+

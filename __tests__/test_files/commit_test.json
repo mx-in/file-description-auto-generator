@@ -1,0 +1,130 @@
+{
+  "status": 200,
+  "url": "https://api.github.com/repos/mx-in/file-description-auto-generator/commits/ffbab616aebda5c676b253a9e290d278a380062e",
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset",
+    "cache-control": "private, max-age=60, s-maxage=60",
+    "connection": "close",
+    "content-encoding": "gzip",
+    "content-security-policy": "default-src 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Mon, 22 May 2023 17:37:06 GMT",
+    "etag": "W/\"163d7c351c9830840b484944c0c8671882ef2e12b26b43113c60f2323fb991cc\"",
+    "last-modified": "Mon, 22 May 2023 17:36:16 GMT",
+    "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+    "server": "GitHub.com",
+    "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+    "transfer-encoding": "chunked",
+    "vary": "Accept, Authorization, Cookie, X-GitHub-OTP, Accept-Encoding, Accept, X-Requested-With",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "deny",
+    "x-github-api-version-selected": "2022-11-28",
+    "x-github-media-type": "github.v3; format=json",
+    "x-github-request-id": "4480:67F8:1A110F6:355215C:646BA842",
+    "x-ratelimit-limit": "1000",
+    "x-ratelimit-remaining": "927",
+    "x-ratelimit-reset": "1684777448",
+    "x-ratelimit-resource": "core",
+    "x-ratelimit-used": "73",
+    "x-xss-protection": "0"
+  },
+  "data": {
+    "sha": "ffbab616aebda5c676b253a9e290d278a380062e",
+    "node_id": "C_kwDOJkfsDtoAKGZmYmFiNjE2YWViZGE1YzY3NmIyNTNhOWUyOTBkMjc4YTM4MDA2MmU",
+    "commit": {
+      "author": {
+        "name": "mx_in",
+        "email": "mouxin1993@gmail.com",
+        "date": "2023-05-22T17:34:10Z"
+      },
+      "committer": {
+        "name": "mx_in",
+        "email": "mouxin1993@gmail.com",
+        "date": "2023-05-22T17:36:16Z"
+      },
+      "message": "chore: remove test demos",
+      "tree": {
+        "sha": "9d385827dc91e2b8862c2feec0b01facf91817bb",
+        "url": "https://api.github.com/repos/mx-in/file-description-auto-generator/git/trees/9d385827dc91e2b8862c2feec0b01facf91817bb"
+      },
+      "url": "https://api.github.com/repos/mx-in/file-description-auto-generator/git/commits/ffbab616aebda5c676b253a9e290d278a380062e",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null
+      }
+    },
+    "url": "https://api.github.com/repos/mx-in/file-description-auto-generator/commits/ffbab616aebda5c676b253a9e290d278a380062e",
+    "html_url": "https://github.com/mx-in/file-description-auto-generator/commit/ffbab616aebda5c676b253a9e290d278a380062e",
+    "comments_url": "https://api.github.com/repos/mx-in/file-description-auto-generator/commits/ffbab616aebda5c676b253a9e290d278a380062e/comments",
+    "author": {
+      "login": "mx-in",
+      "id": 8892970,
+      "node_id": "MDQ6VXNlcjg4OTI5NzA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8892970?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mx-in",
+      "html_url": "https://github.com/mx-in",
+      "followers_url": "https://api.github.com/users/mx-in/followers",
+      "following_url": "https://api.github.com/users/mx-in/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mx-in/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mx-in/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mx-in/subscriptions",
+      "organizations_url": "https://api.github.com/users/mx-in/orgs",
+      "repos_url": "https://api.github.com/users/mx-in/repos",
+      "events_url": "https://api.github.com/users/mx-in/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mx-in/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "mx-in",
+      "id": 8892970,
+      "node_id": "MDQ6VXNlcjg4OTI5NzA=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8892970?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mx-in",
+      "html_url": "https://github.com/mx-in",
+      "followers_url": "https://api.github.com/users/mx-in/followers",
+      "following_url": "https://api.github.com/users/mx-in/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mx-in/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mx-in/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mx-in/subscriptions",
+      "organizations_url": "https://api.github.com/users/mx-in/orgs",
+      "repos_url": "https://api.github.com/users/mx-in/repos",
+      "events_url": "https://api.github.com/users/mx-in/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mx-in/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "90838d2dcd3b93698e56d51be0b6b508701f52a6",
+        "url": "https://api.github.com/repos/mx-in/file-description-auto-generator/commits/90838d2dcd3b93698e56d51be0b6b508701f52a6",
+        "html_url": "https://github.com/mx-in/file-description-auto-generator/commit/90838d2dcd3b93698e56d51be0b6b508701f52a6"
+      }
+    ],
+    "stats": {
+      "total": 27,
+      "additions": 2,
+      "deletions": 25
+    },
+    "files": [
+      {
+        "sha": "d8c5da9b093a2d47ca4671576ac14a17fd140ec4",
+        "filename": "__tests__/main.test.ts",
+        "status": "modified",
+        "additions": 2,
+        "deletions": 25,
+        "changes": 27,
+        "blob_url": "https://github.com/mx-in/file-description-auto-generator/blob/ffbab616aebda5c676b253a9e290d278a380062e/__tests__%2Fmain.test.ts",
+        "raw_url": "https://github.com/mx-in/file-description-auto-generator/raw/ffbab616aebda5c676b253a9e290d278a380062e/__tests__%2Fmain.test.ts",
+        "contents_url": "https://api.github.com/repos/mx-in/file-description-auto-generator/contents/__tests__%2Fmain.test.ts?ref=ffbab616aebda5c676b253a9e290d278a380062e",
+        "patch": "@@ -1,30 +1,7 @@\n-import {wait} from '../src/wait'\n-import * as process from 'process'\n-import * as cp from 'child_process'\n-import * as path from 'path'\n-import {expect, test} from '@jest/globals'\n-import * as core from '@actions/core'\n+import { wait } from '../src/wait'\n+import { expect, test } from '@jest/globals'\n \n test('throws invalid number', async () => {\n   const input = parseInt('foo', 10)\n   await expect(wait(input)).rejects.toThrow('milliseconds not a number')\n })\n-\n-test('wait 500 ms', async () => {\n-  const start = new Date()\n-  await wait(500)\n-  const end = new Date()\n-  var delta = Math.abs(end.getTime() - start.getTime())\n-  expect(delta).toBeGreaterThan(450)\n-})\n-\n-// shows how the runner will run a javascript action with env / stdout protocol\n-test('test runs', () => {\n-  process.env['INPUT_MILLISECONDS'] = '500'\n-  const np = process.execPath\n-  const ip = path.join(__dirname, '..', 'lib', 'main.js')\n-  const options: cp.ExecFileSyncOptions = {\n-    env: process.env\n-  }\n-  console.log(cp.execFileSync(np, [ip], options).toString())\n-})"
+      }
+    ]
+  }
+}
