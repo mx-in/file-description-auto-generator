@@ -44,7 +44,10 @@ export class PromptGenerator {
   }
 
   private fileDescPrompt(filename: string, content: string): string {
-    const prompt = `THE FILE ${filename} CONTENT:\n\`\`\`\n${content}\n\`\`\`\n\n${this.model.prompt}\n`
+    const prompt = `THE FILE ${filename} CONTENT:\n\`\`\`\n${content.replace(
+      ' ',
+      ''
+    )}\n\`\`\`\n\n${this.model.prompt}\n`
     return prompt
   }
 

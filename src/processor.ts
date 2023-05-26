@@ -1,34 +1,23 @@
-import * as fs from 'fs'
 import { FDModel } from './model'
+import { PromptGenerator } from './prompt_generator'
 
 export abstract class Processor {
-  protected isOutputExist: boolean
-  protected isInputExist: boolean
-
   constructor(protected model: FDModel) {
     if (!this.isModelValid()) throw new Error('Invalid input model')
-    this.isOutputExist = fs.existsSync(model.output)
-    this.isInputExist = fs.existsSync(model.input)
   }
+
+  abstract processingWithGPT(prompt: string): Promise<string | undefined>
   /*
    * 1. Check if input file exists
    * 2. Check if output file exists
    * 3. Read input file
    * 4. Generate output
    * */
-  async start(): Promise<string> {
-    if (!this.isInputExist) throw new Error('Input file does not exist')
-    const result = await this.readInput()
-    return await this.generateOutput(result)
-  }
-
-  protected async generateOutput(input: string): Promise<string> {
-    if (!input) throw new Error('Input is empty')
-    return Promise.resolve('')
-  }
-
-  protected async readInput(): Promise<string> {
-    return ''
+  async start(): Promise<string | undefined> {
+    const pGenerator = new PromptGenerator(this.model)
+    const prompt = await pGenerator.start()
+    console.log('Prompt generated::::', prompt)
+    return this.processingWithGPT(prompt)
   }
 
   isModelValid(): boolean {
