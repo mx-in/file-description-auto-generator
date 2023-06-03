@@ -1,4 +1,4 @@
-import { wordCnt as getWordsCount } from '../__tests__/utils'
+import { wordCnt as getWordsCount } from './utils'
 import { FDModel } from './model'
 import { PromptGenerator } from './prompt_generator'
 
