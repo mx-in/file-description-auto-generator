@@ -47,52 +47,9 @@ local plugins = {
     end
   },
 
-  -- Trouble
-  {
-    'folke/trouble.nvim',
-    config = function()
-      require('trouble').setup({})
-    end
-  },
-
-  -- TS Autotag
-  {
-    'windwp/nvim-ts-autotag'
-  },
-
-  -- Icons
-  -- {
-  --   'nvim-tree/nvim-web-devicons'
-  -- },
-
   -- LSP null-ls
   {
     'jose-elias-alvarez/null-ls.nvim'
-  },
-
-  -- Zen Mode
-  {
-    'folke/zen-mode.nvim'
-  },
-
-  -- Colorizer
-  {
-    'norcalli/nvim-colorizer.lua'
-  },
-
-  -- Startify
-  {
-    'mhinz/vim-startify'
-  },
-
-  -- Cellular Automaton
-  {
-    'eandrju/cellular-automaton.nvim'
-  },
-
-  -- Copilot.vim
-  {
-    'github/copilot.vim'
   },
 
   -- Navic
@@ -101,10 +58,6 @@ local plugins = {
     dependencies = {
       'neovim/nvim-lspconfig'
     }
-  },
-
-  {
-    'numToStr/Comment.nvim'
   },
 
   -- Weaktime

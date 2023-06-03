@@ -1,3 +1,4 @@
+import { wordCnt as getWordsCount } from '../__tests__/utils'
 import { FDModel } from './model'
 import { PromptGenerator } from './prompt_generator'
 
@@ -15,7 +16,7 @@ export abstract class Processor {
   }
 
   async processingWithGPT(prompt: string): Promise<string | undefined> {
-    if (prompt.length > this.promptMaxLen) {
+    if (getWordsCount(prompt) > this.promptMaxLen) {
       throw this.generateError('OpenAI query too big')
     }
     if (prompt.length === 0) {

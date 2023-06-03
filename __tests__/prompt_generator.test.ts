@@ -31,13 +31,10 @@ describe('Processor Nvim Packages Input', () => {
     }).rejects.toThrow()
   })
 
-  // test('openai processor', async () => {
-  //   try {
-  //     const result = await processor.start()
-  //     console.log('the result from test case:::::', result)
-  //     expect(result).not.toEqual('')
-  //   } catch (error) {
-  //     console.log('the error form the test case::::', error)
-  //   }
-  // })
+  test('openai processor', async () => {
+    const result = await processor.start()
+    console.log('process result', result)
+    expect(result).not.toEqual('')
+    if (result?.length) expect(result!.split(/\r\n|\r|\n/).length).toEqual(31)
+  }, 50000)
 })
