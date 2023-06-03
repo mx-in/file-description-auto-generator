@@ -6,7 +6,23 @@ export abstract class Processor {
     if (!this.isModelValid()) throw new Error('Invalid input model')
   }
 
-  abstract processingWithGPT(prompt: string): Promise<string | undefined>
+  get promptMaxLen(): number {
+    return 0
+  }
+
+  protected generateError(msg: string): Error {
+    return new Error(`${this.constructor.name}: ${msg}`)
+  }
+
+  async processingWithGPT(prompt: string): Promise<string | undefined> {
+    if (prompt.length > this.promptMaxLen) {
+      throw this.generateError('OpenAI query too big')
+    }
+    if (prompt.length === 0) {
+      throw this.generateError('empty prompt')
+    }
+    return Promise.resolve(undefined)
+  }
   /*
    * 1. Check if input file exists
    * 2. Check if output file exists
@@ -16,20 +32,19 @@ export abstract class Processor {
   async start(): Promise<string | undefined> {
     const pGenerator = new PromptGenerator(this.model)
     const prompt = await pGenerator.start()
-    console.log('Prompt generated::::', prompt)
     return this.processingWithGPT(prompt)
   }
 
   isModelValid(): boolean {
     const model = this.model
     return (
-      !!model.apiKey ||
-      !!model.githubToken ||
-      !!model.prompt ||
-      !!model.model ||
-      !!model.input ||
-      !!model.output ||
-      model.rewrite === undefined
+      !!model.apiKey &&
+      !!model.githubToken &&
+      !!model.prompt &&
+      !!model.model &&
+      !!model.input &&
+      !!model.output &&
+      model.rewrite !== undefined
     )
   }
 }

@@ -12,42 +12,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  -- Telescope
-  {
-    'nvim-telescope/telescope.nvim',
-    version = '0.1.1',
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' }
-    }
-  },
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make',
-    cond = function()
-      return vim.fn.executable 'make' == 1
-    end,
-  },
-  {
-    'nvim-telescope/telescope-file-browser.nvim'
-  },
-
-  -- Treesitter
-  {
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    build = ':TSUpdate',
-  }, {
-
-  'nvim-treesitter/playground'
-},
-
-  {
-    'mbbill/undotree'
-  },
-
-  -- Git
   {
     'tpope/vim-fugitive'
   },
@@ -76,51 +40,6 @@ local plugins = {
     }
   },
 
-  -- LSP
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    dependencies = {
-      -- LSP Support
-      { 'neovim/nvim-lspconfig' },
-      { 'williamboman/mason.nvim' },
-      { 'williamboman/mason-lspconfig.nvim' },
-
-      -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
-
-      -- Snippets
-      { 'L3MON4D3/LuaSnip' },
-      { 'rafamadriz/friendly-snippets' },
-    }
-  },
-  {
-    'folke/lsp-colors.nvim'
-  },
-  {
-    'onsails/lspkind-nvim'
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons'
-    },
-    event = 'ColorScheme',
-    config = function()
-      require('lualine').setup({
-        options = {
-          --- @usage 'rose-pine' | 'rose-pine-alt'
-          theme = 'rose-pine'
-        }
-      })
-    end
-  },
-
-  -- Autopairs
   {
     'windwp/nvim-autopairs',
     config = function()
@@ -156,12 +75,6 @@ local plugins = {
     'folke/zen-mode.nvim'
   },
 
-  {
-    'iamcco/markdown-preview.nvim',
-    build = 'cd app && yarn install'
-  },
-
-
   -- Colorizer
   {
     'norcalli/nvim-colorizer.lua'
@@ -190,19 +103,6 @@ local plugins = {
     }
   },
 
-  -- NavBuddy
-  {
-    'SmiteshP/nvim-navbuddy',
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'SmiteshP/nvim-navic',
-      'MunifTanjim/nui.nvim',
-      'numToStr/Comment.nvim',        -- Optional
-      'nvim-telescope/telescope.nvim' -- Optional
-    }
-  },
-
-  -- Comment
   {
     'numToStr/Comment.nvim'
   },

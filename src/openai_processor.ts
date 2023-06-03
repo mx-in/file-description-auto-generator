@@ -1,5 +1,5 @@
 import { Processor } from './processor'
-import * as consts from './constants'
+import * as consts from './openai_constants'
 import { FDModel } from './model'
 import { Configuration, OpenAIApi } from 'openai'
 
@@ -19,15 +19,13 @@ export class OpenAIProcessor extends Processor {
     this.openai = new OpenAIApi(configuration)
   }
 
-  private generateError(msg: string): Error {
-    return new Error(`OpenAIProcessor: ${msg}`)
+  get promptMaxLen(): number {
+    return consts.MAX_TOKENS
   }
 
   async processingWithGPT(prompt: string): Promise<string | undefined> {
+    await super.processingWithGPT(prompt)
     try {
-      if (prompt.length > consts.MAX_OPEN_AI_QUERY_LENGTH) {
-        this.generateError('OpenAI query too big')
-      }
       const { model } = this.model
       const response = await this.openai.createCompletion({
         model,
