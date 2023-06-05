@@ -1,5 +1,6 @@
+import * as core from '@actions/core'
 import { FDModel } from '../src/model'
-import { expect, test } from '@jest/globals'
+import { beforeAll, expect, test } from '@jest/globals'
 import { OpenAIProcessor } from '../src/openai_processor'
 import { apiKey, githubToken, prompt } from './constants'
 import { testFilePath } from './utils'
@@ -15,9 +16,17 @@ const model: FDModel = {
   rewrite: true
 }
 
+beforeAll(() => {
+  core.info('Hello world! from tests cases')
+  const apiKey = core.getInput('openai-api-key')
+  core.info(`apiKey ${apiKey}`)
+  process.env.OPENAI_API_KEY?.length && core.info('env OPENAI_API_KEY  exist')
+  process.env.GITHUB_TOKEN?.length && core.info('env GITHUB_TOKEN  exist')
+})
+
 describe('Processor', () => {
   test('test enviroment', async () => {
-    expect(process.env.OPENAI_API_KEY).not.toEqual('')
+    expect(apiKey).not.toEqual('')
     expect(githubToken).not.toEqual('')
   })
 

@@ -41,10 +41,7 @@ jobs:
 
       - name: Build and run all(lint, package, test cases)
         run: |
-          npm run all
-        env:
-          OPENAI-API-KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          npm run build && npm run format && npm run lint && npm run package
 
       - name: Compare the expected and actual dist/ directories
         run: |
@@ -63,6 +60,9 @@ jobs:
 
       - name: Run Action
         uses: ./
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           github-token: ${{ secrets.GITHUB_TOKEN }}

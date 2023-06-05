@@ -15,6 +15,12 @@ export async function run(): Promise<void> {
     const rewrite = core.getInput('rewrite')
     const githubToken = core.getInput('github-token')
 
+    apiKey.length && core.info('apiKey exist')
+    githubToken.length && core.info('githubToken exist')
+    process.env.OPENAI_API_KEY?.length && core.info('env OPENAI_API_KEY  exist')
+    process.env.GITHUB_TOKEN?.length && core.info('env GITHUB_TOKEN  exist')
+    core.info(JSON.stringify(process.env))
+
     const inputModel: FDModel = {
       apiKey,
       githubToken,

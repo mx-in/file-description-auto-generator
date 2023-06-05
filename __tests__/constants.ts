@@ -14,6 +14,5 @@ export const prompt = `This is a neovim plugin config file, it is written in lua
                     * [telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim)
                       fzf-native is a c port of fzf. It only covers the algorithm and implements few functions to support calculating the score.
                   `
-
 export const apiKey = process.env.OPENAI_API_KEY || ''
 export const githubToken = process.env.GITHUB_TOKEN || ''

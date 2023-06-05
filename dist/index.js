@@ -1,37 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 2098:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SHARED_PROMPT = exports.MAX_TOKENS = exports.TEMPERATURE = exports.MODEL_NAME = exports.MAX_OPEN_AI_QUERY_LENGTH = void 0;
-exports.MAX_OPEN_AI_QUERY_LENGTH = 20000;
-exports.MODEL_NAME = 'text-davinci-003';
-exports.TEMPERATURE = 0.5;
-exports.MAX_TOKENS = 512;
-exports.SHARED_PROMPT = `You are an expert programmer, and you are trying to summarize a git diff.
-Reminders about the git diff format:
-For every file, there are a few metadata lines, like (for example):
-\`\`\`
-diff --git a/lib/index.js b/lib/index.js
-index aadf691..bfef603 100644
---- a/lib/index.js
-+++ b/lib/index.js
-\`\`\`
-This means that \`lib/index.js\` was modified in this commit. Note that this is only an example.
-Then there is a specifier of the lines that were modified.
-A line starting with \`+\` means it was added.
-A line that starting with \`-\` means that line was deleted.
-A line that starts with neither \`+\` nor \`-\` is code given for context and better understanding. 
-It is not part of the diff.
-`;
-
-
-/***/ }),
-
 /***/ 5634:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -78,7 +47,6 @@ const openai_processor_1 = __nccwpck_require__(3283);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            core.info('Hello world!');
             const apiKey = core.getInput('openai-api-key');
             const prompt = core.getInput('openai-prompt');
             const model = core.getInput('model');
@@ -120,7 +88,189 @@ run();
 
 /***/ }),
 
+/***/ 9226:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.MAX_TOKENS = exports.TEMPERATURE = exports.MODEL_NAME = exports.MAX_QUERY_LENGTH = void 0;
+exports.MAX_QUERY_LENGTH = 20000;
+exports.MODEL_NAME = 'text-davinci-003';
+exports.TEMPERATURE = 0.5;
+exports.MAX_TOKENS = 2048;
+
+
+/***/ }),
+
 /***/ 3283:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.OpenAIProcessor = void 0;
+const processor_1 = __nccwpck_require__(8502);
+const consts = __importStar(__nccwpck_require__(9226));
+const openai_1 = __nccwpck_require__(586);
+const FinReason = {
+    stop: 'stop',
+    length: 'length'
+};
+class OpenAIProcessor extends processor_1.Processor {
+    constructor(model) {
+        super(model);
+        const configuration = new openai_1.Configuration({
+            apiKey: model.apiKey
+        });
+        this.openai = new openai_1.OpenAIApi(configuration);
+    }
+    get promptMaxLen() {
+        return consts.MAX_TOKENS;
+    }
+    processingWithGPT(prompt) {
+        const _super = Object.create(null, {
+            processingWithGPT: { get: () => super.processingWithGPT }
+        });
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            yield _super.processingWithGPT.call(this, prompt);
+            try {
+                const { model } = this.model;
+                const response = yield this.openai.createCompletion({
+                    model,
+                    prompt,
+                    max_tokens: consts.MAX_TOKENS,
+                    temperature: consts.TEMPERATURE
+                });
+                const isResponseValid = response.data.choices !== undefined && response.data.choices.length > 0;
+                if (isResponseValid) {
+                    const isExceedLength = ((_a = response.data.choices[0].finish_reason) !== null && _a !== void 0 ? _a : '') === FinReason.length;
+                    if (isExceedLength)
+                        throw this.generateError('the tokens exceed the max length');
+                    const result = (_b = response.data.choices[0].text) !== null && _b !== void 0 ? _b : '';
+                    if (result.length === 0)
+                        this.generateError('empty response');
+                    return result;
+                }
+                else {
+                    this.generateError('invalid response');
+                }
+            }
+            catch (error) {
+                throw error;
+            }
+        });
+    }
+}
+exports.OpenAIProcessor = OpenAIProcessor;
+
+
+/***/ }),
+
+/***/ 8502:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Processor = void 0;
+const utils_1 = __nccwpck_require__(6548);
+const prompt_generator_1 = __nccwpck_require__(711);
+class Processor {
+    constructor(model) {
+        this.model = model;
+        if (!this.isModelValid())
+            throw new Error('Invalid input model');
+    }
+    get promptMaxLen() {
+        return 0;
+    }
+    generateError(msg) {
+        return new Error(`${this.constructor.name}: ${msg}`);
+    }
+    processingWithGPT(prompt) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if ((0, utils_1.wordCnt)(prompt) > this.promptMaxLen) {
+                throw this.generateError('OpenAI query too big');
+            }
+            if (prompt.length === 0) {
+                throw this.generateError('empty prompt');
+            }
+            return Promise.resolve(undefined);
+        });
+    }
+    /*
+     * 1. Check if input file exists
+     * 2. Check if output file exists
+     * 3. Read input file
+     * 4. Generate output
+     * */
+    start() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pGenerator = new prompt_generator_1.PromptGenerator(this.model);
+            const prompt = yield pGenerator.start();
+            return this.processingWithGPT(prompt);
+        });
+    }
+    isModelValid() {
+        const model = this.model;
+        return (!!model.apiKey &&
+            !!model.githubToken &&
+            !!model.prompt &&
+            !!model.model &&
+            !!model.input &&
+            !!model.output &&
+            model.rewrite !== undefined);
+    }
+}
+exports.Processor = Processor;
+
+
+/***/ }),
+
+/***/ 711:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -161,20 +311,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.OpenAIProcessor = void 0;
-const processor_1 = __nccwpck_require__(8502);
-const consts = __importStar(__nccwpck_require__(2098));
-const openai_1 = __nccwpck_require__(586);
+exports.PromptGenerator = exports.GIT_DIFF_PROMPT = void 0;
 const fs = __importStar(__nccwpck_require__(7147));
 const path_1 = __importDefault(__nccwpck_require__(1017));
-class OpenAIProcessor extends processor_1.Processor {
+exports.GIT_DIFF_PROMPT = `You are an expert programmer, and you are trying to summarize a git diff.
+                                Reminders about the git diff format:
+                                For every file, there are a few metadata lines, like (for example):
+                                \`\`\`
+                                diff --git a/lib/index.js b/lib/index.js
+                                index aadf691..bfef603 100644
+                                --- a/lib/index.js
+                                +++ b/lib/index.js
+                                \`\`\`
+                                This means that \`lib/index.js\` was modified in this commit. Note that this is only an example.
+                                Then there is a specifier of the lines that were modified.
+                                A line starting with \`+\` means it was added.
+                                A line that starting with \`-\` means that line was deleted.
+                                A line that starts with neither \`+\` nor \`-\` is code given for context and better understanding. 
+                                It is not part of the diff.
+                                `;
+class PromptGenerator {
+    get needRewrite() {
+        return this.model.rewrite || !this.isOutputExist;
+    }
     constructor(model) {
-        super(model);
-        console.log(model.apiKey);
-        const configuration = new openai_1.Configuration({
-            apiKey: model.apiKey
-        });
-        this.openai = new openai_1.OpenAIApi(configuration);
+        this.model = model;
+        this.isOutputExist = fs.existsSync(model.output);
+        this.isInputExist = fs.existsSync(model.input);
     }
     readFile(fPath) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -190,129 +353,42 @@ class OpenAIProcessor extends processor_1.Processor {
             });
         });
     }
-    generateOutput() {
-        var _a;
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log('generateOutput:::::', this.model);
-            try {
-                const filename = path_1.default.basename(this.model.input);
-                const fileContent = yield this.readFile(this.model.input);
-                const { prompt, model } = this.model;
-                const openAIPrompt = `${consts.SHARED_PROMPT}\n\nTHE GIT DIFF OF ${filename} TO BE SUMMARIZED:\n\`\`\`\n${fileContent}\n\`\`\`\n\nSUMMARY:\n`;
-                console.log(`OpenAI file summary prompt for ${filename}:\n${openAIPrompt}`);
-                if (openAIPrompt.length > consts.MAX_OPEN_AI_QUERY_LENGTH) {
-                    throw new Error('OpenAI query too big');
-                }
-                const response = yield this.openai.createCompletion({
-                    model,
-                    prompt,
-                    max_tokens: consts.MAX_TOKENS,
-                    temperature: consts.TEMPERATURE
-                });
-                if (response.data.choices !== undefined &&
-                    response.data.choices.length > 0) {
-                    console.log('OpenAI response', response.data.choices[0].text);
-                    return ((_a = response.data.choices[0].text) !== null && _a !== void 0 ? _a : `Error: couldn't generate summary`);
-                }
-            }
-            catch (error) {
-                console.error('Error generating summary', error);
-            }
-            return "Error: couldn't generate summary";
-        });
+    fileDescPrompt(filename, content) {
+        const prompt = `THE FILE ${filename} CONTENT:\n\`\`\`\n${content.replace(' ', '')}\n\`\`\`\n\n${this.model.prompt}\n`;
+        return prompt;
     }
-}
-exports.OpenAIProcessor = OpenAIProcessor;
-
-
-/***/ }),
-
-/***/ 8502:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+    gitPatchPrompt(filename, content) {
+        const prompt = `${exports.GIT_DIFF_PROMPT}\n\nTHE GIT DIFF OF ${filename} TO BE SUMMARIZED:\n\`\`\`\n${content}\n\`\`\`\n\nSUMMARY:\n`;
+        return prompt;
     }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Processor = void 0;
-const fs = __importStar(__nccwpck_require__(7147));
-class Processor {
-    constructor(model) {
-        this.model = model;
-        if (!this.isModelValid())
-            throw new Error('Invalid input model');
-        this.isOutputExist = fs.existsSync(model.output);
-        this.isInputExist = fs.existsSync(model.input);
-    }
-    /*
-     * 1. Check if input file exists
-     * 2. Check if output file exists
-     * 3. Read input file
-     * 4. Generate output
-     * */
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.isInputExist)
                 throw new Error('Input file does not exist');
-            const result = yield this.readInput();
-            return yield this.generateOutput(result);
+            const filename = path_1.default.basename(this.model.input);
+            const fileContent = yield this.readFile(this.model.input);
+            return this.needRewrite
+                ? this.fileDescPrompt(filename, fileContent)
+                : this.gitPatchPrompt(filename, fileContent);
         });
-    }
-    generateOutput(input) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!input)
-                throw new Error('Input is empty');
-            return Promise.resolve('');
-        });
-    }
-    readInput() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return '';
-        });
-    }
-    isModelValid() {
-        const model = this.model;
-        return (!!model.apiKey ||
-            !!model.githubToken ||
-            !!model.prompt ||
-            !!model.model ||
-            !!model.input ||
-            !!model.output ||
-            model.rewrite === undefined);
     }
 }
-exports.Processor = Processor;
+exports.PromptGenerator = PromptGenerator;
+
+
+/***/ }),
+
+/***/ 6548:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.wordCnt = void 0;
+const wordCnt = (str) => {
+    return str.split(/\s+/).length;
+};
+exports.wordCnt = wordCnt;
 
 
 /***/ }),
