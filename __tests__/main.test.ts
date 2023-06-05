@@ -17,7 +17,7 @@ const model: FDModel = {
 
 describe('Processor', () => {
   test('test enviroment', async () => {
-    expect(apiKey).not.toEqual('')
+    expect(process.env.OPENAI_API_KEY).not.toEqual('')
     expect(githubToken).not.toEqual('')
   })
 
