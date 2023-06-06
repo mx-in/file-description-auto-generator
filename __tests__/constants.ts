@@ -16,4 +16,4 @@ export const prompt = `This is a neovim plugin config file, it is written in lua
                   `
 
 export const apiKey = process.env.OPENAI_API_KEY || ''
-export const githubToken = process.env.GITHUB_TOKEN || ''
+export const githubToken = process.env.GITHUB_TOKEN || 'test_github_token'
