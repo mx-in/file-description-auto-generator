@@ -43,8 +43,8 @@ jobs:
         run: |
           npm run all
         env:
-          OPENAI-API-KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB-TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Compare the expected and actual dist/ directories
         run: |
