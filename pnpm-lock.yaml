@@ -11,8 +11,8 @@ dependencies:
     specifier: ^5.1.1
     version: 5.1.1
   '@octokit/rest':
-    specifier: ^19.0.11
-    version: 19.0.11
+    specifier: ^19.0.13
+    version: 19.0.13
 
 devDependencies:
   '@jest/globals':
@@ -962,8 +962,8 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/rest@19.0.11:
-    resolution: {integrity: sha512-m2a9VhaP5/tUw8FwfnW2ICXlXpLPIqxtg3XcAiGMLj/Xhw3RSBfZ8le/466ktO1Gcjr8oXudGnHhxV1TXJgFxw==}
+  /@octokit/rest@19.0.13:
+    resolution: {integrity: sha512-/EzVox5V9gYGdbAI+ovYj3nXQT1TtTHRT+0eZPcuC05UFSWO3mdO9UY1C0i2eLF9Un1ONJkAk+IEtYGAC+TahA==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/core': 4.2.1
